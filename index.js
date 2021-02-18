@@ -1,15 +1,11 @@
-const { rejects } = require("assert");
 const https = require("https");
 // https://jsonmock.hackerrank.com/api/movies/search/?Title=${substr}
 
-function getMovieTitles(substr) {
-  let titles = [];
-  let total_pages;
-
-  let request = new Promise((resolve, reject) => {
+function getPage(substr, page_number) {
+  return new Promise((resolve, reject) => {
     https
       .get(
-        `https://jsonmock.hackerrank.com/api/movies/search/?Title=${substr}&page=1`,
+        `https://jsonmock.hackerrank.com/api/movies/search/?Title=${substr}&page=${page_number}`,
         (resp) => {
           let data = "";
 
@@ -30,18 +26,33 @@ function getMovieTitles(substr) {
         reject(err);
       });
   });
+}
 
-  request
-    .then((data) => {
+async function requestMovie(substr) {
+  let titles = [];
+  let total_pages;
+  let current_page = 1;
+
+  do {
+    try {
+      let data = await getPage(substr, current_page);
+
+      total_pages = data.total_pages;
       data.data.map((el) => {
         titles.push(el.Title);
       });
-      console.log(titles);
-    })
-    .catch((error) => {
+      console.log(current_page);
+      current_page += 1;
+    } catch (error) {
+      // Promise rejected
       console.log(error);
-    });
+      break;
+    }
+  } while (current_page <= total_pages);
+
+  console.log(titles.sort());
 }
 
-getMovieTitles("spiderman");
-// getMovieTitles("water");
+requestMovie("spiderman");
+
+// requestMovie("water");
