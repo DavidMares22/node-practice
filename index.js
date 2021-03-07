@@ -1,5 +1,4 @@
 const express = require("express");
-const path = require("path");
 const exphbs = require("express-handlebars");
 const homeRoutes = require("./routes/home")
 const coursesRoutes = require("./routes/courses")
@@ -19,6 +18,8 @@ app.engine(
 app.set("view engine", "hbs");
 
 app.use(express.static("public"));
+app.use(express.urlencoded({extended:true}))
+
 app.use('/',homeRoutes)
 app.use('/courses',coursesRoutes)
 app.use('/add',addRoutes)
