@@ -1,2 +1,27 @@
  
     <h1>Courses page</h1>
+    <p>section 3 - video 12</p>
+
+{{#if courses.length}}
+  <div class="row">
+{{#each courses}}
+    <div class="col s4">
+      <div class="card ">
+        <div class="card-image">
+          <img src="{{img}}" alt="{{title}}" width="100px" height="150px">
+        </div>
+        <div class="card-content">
+          <span class="card-title">{{title}}</span>
+          <p class="price">{{price}}</p>
+        </div>
+        <div class="card-action">
+          <a href="/courses/{{id}}">Open course</a>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+  </div>
+
+{{else}}
+<p>There are no courses</p>
+{{/if}}
