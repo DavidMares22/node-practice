@@ -35,11 +35,13 @@ class Card {
     const idx = card.courses.findIndex((c) => c.id === id);
     const course = card.courses[idx];
 
-    if (course.count === 1) {
+    if (course["count"] === 1) {
       card.courses = card.courses.filter((c) => c.id !== id);
     } else {
-      card.course[idx].count--
+      // console.log("more than one");
+      card.courses[idx].count--;
     }
+ 
 
     card.price -= course.price
 

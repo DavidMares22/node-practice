@@ -1,8 +1,13 @@
-document.querySelectorAll(".price").forEach((node) => {
-  node.textContent = new Intl.NumberFormat("de-DE", {
+const toCurrency = price => {
+  return new Intl.NumberFormat("de-DE", {
     currency: "EUR",
     style: "currency",
-  }).format(node.textContent);
+  }).format(price);
+} 
+
+
+document.querySelectorAll(".price").forEach((node) => {
+  node.textContent = toCurrency(node.textContent)
 });
 
 const $card = document.querySelector("#card");
@@ -16,10 +21,27 @@ if ($card) {
       })
         .then((res) => res.json())
         .then((card) => {
-          console.log(card);
-        })
-        .catch((err) => {
-          return err;
+          if (card.courses.length) {
+            const html = card.courses
+              .map((c) => {
+                return `
+              <tr>
+              <td>${c.title}</td>
+              <td>${c.count}</td>
+              <td>
+                  <button class="btn btn-small js-remove" data-id="${c.id}">Delete</button>
+              </td>
+          </tr>
+
+              `;
+              })
+              .join(" ");
+
+            $card.querySelector("tbody").innerHTML = html;
+            $card.querySelector(".price").textContent = toCurrency(card.price);
+          } else {
+            $card.innerHTML = "<p>Card is empty</p>";
+          }
         });
     }
   });

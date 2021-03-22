@@ -25,7 +25,7 @@ router.get('/', async(req,res) =>{
 router.delete('/remove/:id', async(req,res) =>{
     const card = await Card.delete(req.params.id)
     res.status(200).json(card)
-
+    
 })
 
 module.exports = router
