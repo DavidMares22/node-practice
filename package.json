@@ -22,8 +22,10 @@
   },
   "homepage": "https://github.com/DavidMares22/node-practice#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.1",
+    "mongoose": "^5.12.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
