@@ -2,11 +2,11 @@
   padding: 0 2rem;
 }
 
-.price{
+.price {
   font-size: 2rem;
-} 
+}
 
-.course{
+.course {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -17,16 +17,11 @@
   margin-bottom: 2rem;
 }
 
-.course img {
-  max-width: 600px;
-  height: auto;
-}
-
-.course .price .big{
+.course .price .big {
   font-size: 2.5rem;
 }
 
-.actions{
+.actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
