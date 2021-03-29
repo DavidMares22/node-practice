@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id/edit", async (req, res) => {
   if (!req.query.allow) {
-    return res.redirect('/')
+    return res.redirect("/");
   }
   const course = await Course.findById(req.params.id).lean();
   res.render("course-edit", {
@@ -22,19 +22,29 @@ router.get("/:id/edit", async (req, res) => {
   });
 });
 
-router.post('/edit',async (req,res) =>{
-  await Course.findByIdAndUpdate(req.body.id, req.body)
-  res.redirect('/courses')
+router.post("/edit", async (req, res) => {
+  await Course.findByIdAndUpdate(req.body.id, req.body);
+  res.redirect("/courses");
+});
 
-})
+router.post("/remove", async (req, res) => {
+  try {
+    await Course.deleteOne({
+      _id: req.body.id,
+    });
+    res.redirect('/courses')
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 router.get("/:id", async (req, res) => {
   const course = await Course.findById(req.params.id).lean();
-  
+
   res.render("course", {
-    layout:'empty',
+    layout: "empty",
     title: `Course ${course.title}`,
-    course
+    course,
   });
 });
 
