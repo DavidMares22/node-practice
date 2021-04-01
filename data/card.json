@@ -1,1 +1,1 @@
-{"courses":[],"price":0}
+{"courses":[{"_id":"606542fa5cdbd216dcb56ef5","title":"python","price":38384,"img":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/1200px-Python.svg.png","__v":0,"count":2},{"_id":"605d0ed668e7b031f8495085","title":"Course one","price":23500,"img":"https://cdn3.altiria.com/wp-content/uploads//2017/03/node-logo.jpg","__v":0,"count":1}],"price":100268}
