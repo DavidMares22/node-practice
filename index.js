@@ -4,6 +4,7 @@ const homeRoutes = require("./routes/home");
 const coursesRoutes = require("./routes/courses");
 const addRoutes = require("./routes/add");
 const cardRoutes = require("./routes/card");
+const orderRoutes = require("./routes/orders");
 const path = require("path");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -40,6 +41,7 @@ app.use("/", homeRoutes);
 app.use("/courses", coursesRoutes);
 app.use("/add", addRoutes);
 app.use("/card", cardRoutes);
+app.use("/order", orderRoutes);
 
 const PORT = process.env.PORT || 3000;
 
