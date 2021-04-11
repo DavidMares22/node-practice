@@ -27,6 +27,12 @@ const userSchema = new Schema({
   },
 });
 
+
+userSchema.methods.clearCart = function () {
+  this.cart = {items:[]}
+  return this.save()
+}
+
 userSchema.methods.addToCart = function (course) {
   const clonedItems = [...this.cart.items];
   const idx = clonedItems.findIndex(

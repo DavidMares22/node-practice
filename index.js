@@ -19,6 +19,10 @@ app.engine(
   exphbs({
     defaultLayout: "main",
     extname: ".hbs",
+    runtimeOptions: {
+      allowProtoPropertiesByDefault: true,
+      allowProtoMethodsByDefault: true,
+    },
   })
 );
 

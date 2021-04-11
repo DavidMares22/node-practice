@@ -1,21 +1,59 @@
 const { Router } = require("express");
-const Order = require("../models/order")
+const Order = require("../models/order");
 const router = Router();
 
+router.get("/", async (req, res) => {
+  try {
+    let orders = await Order.find({
+      "user.userId": req.user._id,
+    }).populate({
+      path:"user.userId",
+      options: { lean: true}
+    });
 
+    const ordersFormat = orders.map((order) => {
+      return {
+        ...order._doc,
+        price: order.courses.reduce((total, c) => {
+          return (total += c.count * c.course.price);
+        }, 0),
+      };
+    });
 
-router.get('/', async (req,res) => {
+    // console.log(ordersFormat);
 
-    res.render('order', {
-        isOrder:true,
-        title: 'Order'
-    })
+    res.render("order", {
+      isOrder: true,
+      title: "Orders",
+      orders: ordersFormat,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+});
+router.post("/", async (req, res) => {
+  try {
+    const user = await req.user.populate("cart.items.courseId").execPopulate();
+    const courses = user.cart.items.map((i) => ({
+      count: i.count,
+      course: { ...i.courseId._doc },
+    }));
 
-})
-router.post('/', async (req,res) => {
+    const order = new Order({
+      user: {
+        name: req.user.name,
+        userId: req.user._id,
+      },
+      courses,
+    });
 
-    res.redirect('/order')
-})
+    await order.save();
+    await req.user.clearCart();
+  } catch (e) {
+    console.log(e);
+  }
 
+  res.redirect("/order");
+});
 
-module.exports = router
+module.exports = router;
