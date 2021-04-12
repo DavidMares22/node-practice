@@ -1,3 +1,4 @@
+
 const toCurrency = price => {
   return new Intl.NumberFormat("de-DE", {
     currency: "EUR",
@@ -61,3 +62,6 @@ if ($card) {
     }
   });
 }
+
+
+M.Tabs.init(document.querySelectorAll('.tabs'))
