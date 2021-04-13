@@ -13,7 +13,11 @@
         {{else}}
         <li><a href="/courses">Courses</a></li>
         {{/if}}
-        {{#if isAdd}}
+
+
+        {{#if isAuth}}
+
+           {{#if isAdd}}
         <li class="active"><a href="/add">Add Course</a></li>
         {{else}}
         <li><a href="/add">Add Course</a></li>
@@ -29,12 +33,21 @@
         <li><a href="/order">Order</a></li>
         {{/if}}
 
+        <li><a href="/auth/logout">Logout</a></li>
+        {{else}}
+
         
-        {{#if isLogin}}
-        <li class="active"><a href="/auth/login#login">Login</a></li>
-      {{else}}
-        <li><a href="/auth/login#login">Login</a></li>
-      {{/if}} 
+            {{#if isLogin}}
+            <li class="active"><a href="/auth/login#login">Login</a></li>
+            {{else}}
+            <li><a href="/auth/login#login">Login</a></li>
+            {{/if}} 
+
+        {{/if}}
+
+
+       
+        
       </ul>
     </div>
   </nav>
