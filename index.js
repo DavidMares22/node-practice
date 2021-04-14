@@ -1,6 +1,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const session = require("express-session");
+const MongoStore = require("connect-mongodb-session")(session)
 const homeRoutes = require("./routes/home");
 const coursesRoutes = require("./routes/courses");
 const addRoutes = require("./routes/add");
@@ -10,7 +11,6 @@ const authRoutes = require("./routes/auth");
 const path = require("path");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const User = require("./models/user");
 const varMiddleware = require('./middleware/variables')
 
 const app = express();
@@ -31,15 +31,11 @@ app.engine(
 
 app.set("view engine", "hbs");
 
-app.use(async (req, res, next) => {
-  try {
-    const user = await User.findById("6065455b07673c2bc8b022e0");
-    req.user = user;
-    next();
-  } catch (error) {
-    console.log(error);
-  }
-});
+ const store = new MongoStore({
+   collection: 'sessions',
+   uri: process.env.MONGO_URI
+
+ })
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -49,6 +45,7 @@ app.use(
     secret: "some secret value",
     resave: false,
     saveUninitialized: false,
+    store
   })
 );
 
@@ -70,17 +67,7 @@ async function start() {
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
-    // console.log(process.env.MONGO_URI);
-
-    const candidate = await User.findOne();
-    if (!candidate) {
-      const user = new User({
-        email: "alex@gmail.com",
-        name: "Alex",
-        cart: { items: [] },
-      });
-      await user.save();
-    }
+   
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
