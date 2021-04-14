@@ -12,6 +12,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const varMiddleware = require('./middleware/variables')
+const userMiddleware = require('./middleware/user')
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use(
 );
 
 app.use(varMiddleware)
+app.use(userMiddleware)
 
 app.use("/", homeRoutes);
 app.use("/courses", coursesRoutes);
