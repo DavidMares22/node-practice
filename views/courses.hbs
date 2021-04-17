@@ -19,11 +19,12 @@
          {{#if @root.isAuth}}
           <a href="/courses/{{_id}}/edit?allow=true">Edit course</a>
           <form action="/card/add" method="post">
+          <input type="hidden" name="_csrf" value="{{@root.csrf}}">
             <input type="hidden" name="id" value="{{_id}}">
             <button type="submit" class="btn btn-primary">Buy</button>
-          {{/if}}
 
           </form>
+          {{/if}}
         </div>
       </div>
     </div>
